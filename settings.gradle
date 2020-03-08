@@ -1,0 +1,2 @@
+rootProject.name='MemoApp_1'
+include ':app'

@@ -7,7 +7,21 @@ public class Note {
     private String title;
     private String body;
     private LocalDateTime creationTime;
-    private int color;
+    private Integer color;
+
+    private Note() {
+    }
+
+    public Note(String title, String body, Integer color) throws IllegalArgumentException {
+
+        if (title == null || body == null){
+            throw new IllegalArgumentException("Both title and body cannot be empty!");
+        }
+
+        this.title = title;
+        this.body = body;
+        this.color = color;
+    }
 
     public String getTitle() {
         return title;
@@ -33,7 +47,7 @@ public class Note {
         this.creationTime = creationTime;
     }
 
-    public int getColor() {
+    public Integer getColor() {
         return color;
     }
 

@@ -7,8 +7,6 @@ import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
-  // Are you still there?
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,26 +1,26 @@
 package com.example.memoapp_1;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Note {
 
     private String title;
     private String body;
-    private LocalDateTime creationTime;
+    private Date creationTime;
     private Integer color;
 
     private Note() {
     }
 
-    public Note(String title, String body, Integer color) throws IllegalArgumentException {
-
-        if (title == null || body == null){
-            throw new IllegalArgumentException("Both title and body cannot be empty!");
-        }
-
+    public Note(String title, String body, Integer color) {
         this.title = title;
         this.body = body;
         this.color = color;
+        this.creationTime=new Date();
     }
 
     public String getTitle() {
@@ -39,12 +39,8 @@ public class Note {
         this.body = body;
     }
 
-    public LocalDateTime getCreationTime() {
+    public Date getCreationTime() {
         return creationTime;
-    }
-
-    public void setCreationTime(LocalDateTime creationTime) {
-        this.creationTime = creationTime;
     }
 
     public Integer getColor() {

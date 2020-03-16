@@ -5,13 +5,25 @@ import java.util.List;
 
 public class FakeNotes {
 
-    public static List<Note> getNotes(){
-        List notes=new LinkedList<Note>();
+    public static List<Note> getNotes() {
+        List notes = new LinkedList<Note>();
 
-        try{
-            notes.add(new Note("null","null",null));
-        }
-        catch (IllegalArgumentException e){
+        try {
+            notes.add(new Note("Tiefink  dui9nf", "n sijb8sub  s89ahnasui ai asi9d ija a" +
+                    "afiegumnwseherh" +
+                    "srhirghwenujgaeh" +
+                    "srhre" +
+                    "ger" +
+                    "gdf" +
+                    "gber" +
+                    "gber" +
+                    "ter" +
+                    "yhs54sygrh" +
+                    "srth" +
+                    "serrtfyhrtsh" +
+                    "34yhersbdf" +
+                    "serhhrtji", null));
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
 

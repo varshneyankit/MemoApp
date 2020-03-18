@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Fetch the data set being used by the adapter.
-                List<Note> allNotes = adapter.getNotes();
+                final List<Note> allNotes = adapter.getNotes();
                 allNotes.add(FakeNotes.getDummyNote());
                 adapter.notifyDataSetChanged();
 
@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 snackbar.setAction("Undo", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        allNotes.remove(allNotes.size()-1);
+                        adapter.notifyDataSetChanged();
                     }
                 });
 

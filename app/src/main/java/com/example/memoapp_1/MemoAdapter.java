@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,7 +63,7 @@ public class MemoAdapter extends ArrayAdapter<Note> {
         titleview.setText(currentNote.getTitle());
         bodyview.setText(currentNote.getBody());
         timeview.setText("Created : " + currentNote.getCreationTime().toLocaleString());
-
+        convertView.setBackgroundColor(currentNote.getColor());
         return convertView;
     }
 

@@ -3,6 +3,7 @@ package com.example.memoapp_1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,10 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class CreateNoteActivity extends AppCompatActivity {
     public final static String NOTE_RESULT_INTENT_KEY = "ADGJ";
@@ -19,6 +23,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+        colorPicker();
     }
 
     @Override
@@ -53,7 +58,19 @@ public class CreateNoteActivity extends AppCompatActivity {
                 return false;
         }
 
-
         return true;
+
     }
+
+    @SuppressLint("ResourceAsColor")
+    public void colorPicker(){
+        FloatingActionButton bluec = findViewById(R.id.activity_create_note_body_color_blue);
+        FloatingActionButton yellowc = findViewById(R.id.activity_create_note_body_color_yellow);
+        LinearLayout ll =findViewById(R.id.activity_create_note_layout);
+        if(bluec.isSelected()) ll.setBackgroundColor(R.color.colorBlue);
+        if (yellowc.isSelected()) ll.setBackgroundColor(R.color.colorYellow);
+
+
+    }
+
 }

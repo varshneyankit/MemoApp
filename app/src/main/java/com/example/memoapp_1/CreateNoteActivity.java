@@ -1,20 +1,17 @@
 package com.example.memoapp_1;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CreateNoteActivity extends AppCompatActivity {
     public final static String NOTE_RESULT_INTENT_KEY = "ADGJ";
@@ -23,7 +20,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
-        colorPicker();
+        setupColorPickers();
     }
 
     @Override
@@ -44,7 +41,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 String bodyContent = bodyText.getText().toString();
 
                 if (TextUtils.isEmpty(titleContent) && TextUtils.isEmpty(bodyContent)) {
-                    Toast.makeText(this,"Note can't be a blank note !!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Note can't be a blank note !!", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
@@ -62,15 +59,23 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("ResourceAsColor")
-    public void colorPicker(){
-        FloatingActionButton bluec = findViewById(R.id.activity_create_note_body_color_blue);
-        FloatingActionButton yellowc = findViewById(R.id.activity_create_note_body_color_yellow);
-        LinearLayout ll =findViewById(R.id.activity_create_note_layout);
-        if(bluec.isSelected()) ll.setBackgroundColor(R.color.colorBlue);
-        if (yellowc.isSelected()) ll.setBackgroundColor(R.color.colorYellow);
+    private void initPicker(int pickerId, int colorId) {
 
+        final int color = getResources().getColor(colorId);
+        View picker = findViewById(pickerId);
 
+        picker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View parent = findViewById(R.id.activity_create_note_layout);
+                parent.setBackgroundColor(color);
+            }
+        });
+    }
+
+    private void setupColorPickers() {
+        initPicker(R.id.activity_create_note_body_color_blue, R.color.colorBlue);
+        initPicker(R.id.activity_create_note_body_color_yellow, R.color.colorYellow);
     }
 
 }

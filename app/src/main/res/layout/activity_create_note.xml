@@ -1,52 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:ankit="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:id="@+id/activity_create_note_layout"
+    ankit:id="@+id/activity_create_note_layout"
+    ankit:layout_width="match_parent"
+    ankit:layout_height="match_parent"
+    ankit:orientation="vertical"
+    ankit:padding="8dp"
     tools:context=".CreateNoteActivity">
 
     <EditText
-        android:id="@+id/activity_create_note_title_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title"
-        android:inputType="textAutoCorrect"
-        android:padding="8dp"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:textStyle="bold" />
+        ankit:id="@+id/activity_create_note_title_edit_text"
+        ankit:layout_width="match_parent"
+        ankit:layout_height="wrap_content"
+        ankit:hint="Title"
+        ankit:inputType="textAutoCorrect"
+        ankit:padding="8dp"
+        ankit:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        ankit:textStyle="bold" />
 
     <EditText
-        android:id="@+id/activity_create_note_body_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top|left"
-        android:inputType="textAutoCorrect|textMultiLine"
-        android:minLines="10"
-        android:padding="8dp"
-        android:scrollbars="vertical"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textStyle="normal" />
+        ankit:id="@+id/activity_create_note_body_edit_text"
+        ankit:layout_width="match_parent"
+        ankit:layout_height="0dp"
+        ankit:layout_weight="1"
+        ankit:gravity="top|left"
+        ankit:inputType="textAutoCorrect|textMultiLine"
+        ankit:minLines="10"
+        ankit:padding="8dp"
+        ankit:scrollbars="vertical"
+        ankit:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        ankit:textStyle="normal" />
 
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_create_note_body_color_blue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#3F51B5"
-        android:clickable="true"
-        android:padding="20dp"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_create_note_body_color_yellow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusableInTouchMode="true"
-        android:backgroundTint="#FFEB3B"
-        android:padding="20dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        ankit:layout_width="match_parent"
+        ankit:id="@+id/activity_create_note_color_picker_recycler"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        ankit:layout_height="wrap_content"
+        ankit:orientation="horizontal" />
 
 </LinearLayout>

@@ -36,6 +36,7 @@
         ankit:layout_width="match_parent"
         ankit:id="@+id/activity_create_note_color_picker_recycler"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:spanCount="2"
         ankit:layout_height="wrap_content"
         ankit:orientation="horizontal" />
 

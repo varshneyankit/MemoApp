@@ -3,6 +3,8 @@ package com.example.memoapp_1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -27,24 +29,38 @@ public class CreateNoteActivity extends AppCompatActivity {
     public final static String NOTE_RESULT_INTENT_KEY = "ADGJ";
     int DEFAULT_COLOR;
     LinearLayout CURRENT_LAYOUT;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
-        // Creating list of colors
+        // Creating list of color
+        List<Integer> colorList =new ArrayList<Integer>(){
+            // Overriding add() to get the value of color
+            @Override
+            public boolean add(Integer element) {
+                element = getResources().getColor(element);
+                return super.add(element);
+            }
+        };
 
-        List<String> colorList =new ArrayList<>();
-        colorList.add(0,"#b3ffff");
-        colorList.add(1,"#4dffb8");
-        colorList.add(2,"#ff99bb");
-        colorList.add(3,"#ffff99");
-        colorList.add(4,"#ff99ff");
-        colorList.add(5,"#ff4d4d");
-        colorList.add(6,"#6666ff");
-        colorList.add(7,"#ff8533");
+        colorList.add(R.color.colorYellow);
+        colorList.add(R.color.colorBlue);
+        colorList.add(R.color.colorGreenAccent);
+        colorList.add(R.color.colorOrange);
+        colorList.add(R.color.colorPink);
+        colorList.add(R.color.colorPinkAccent);
+        colorList.add(R.color.colorRed);
+        colorList.add(R.color.colorAccent);
 
+        // Sending colors to Recycler Adapter
+
+        recyclerView = (RecyclerView) findViewById(R.id.activity_create_note_color_picker_recycler);
+        adapter = new ColorPickerAdpater(colorList);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

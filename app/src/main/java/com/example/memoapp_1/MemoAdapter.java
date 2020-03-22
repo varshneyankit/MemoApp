@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,9 +36,10 @@ public class MemoAdapter extends ArrayAdapter<Note> {
 
     /**
      * Called every time the adapter needs to render a new view on the screen.
-     * @param position The position of required view in the ListView.
+     *
+     * @param position    The position of required view in the ListView.
      * @param convertView The old view to be recycled.
-     * @param parent The parent view in which this will be rendered.
+     * @param parent      The parent view in which this will be rendered.
      * @return The view containing actual data according to position.
      */
     @NonNull
@@ -47,7 +47,7 @@ public class MemoAdapter extends ArrayAdapter<Note> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         // If view has not been rendered before a new view needs to inflated.
-        if (convertView == null){
+        if (convertView == null) {
             // LayoutInflater inflates a View from an XML file.
             convertView = LayoutInflater.from(context).inflate(resource, parent, false);
         }
@@ -59,7 +59,7 @@ public class MemoAdapter extends ArrayAdapter<Note> {
         CardView cardView = convertView.findViewById(R.id.item_card);
 
         // Fetch the required item according to position from list of notes (data).
-        Note currentNote = notes.get(position);
+        final Note currentNote = notes.get(position);
 
         // Prepare views for render by setting data.
         titleview.setText(currentNote.getTitle());
@@ -67,11 +67,19 @@ public class MemoAdapter extends ArrayAdapter<Note> {
         timeview.setText("Created : " + currentNote.getCreationTime().toLocaleString());
         cardView.setBackgroundColor(currentNote.getColor());
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)context).startActivityForModify(currentNote);
+            }
+        });
+
         return convertView;
     }
 
     /**
      * Used to access the data set being used by the adapter.
+     *
      * @return List of notes passed in the constructor.
      */
     public List<Note> getNotes() {

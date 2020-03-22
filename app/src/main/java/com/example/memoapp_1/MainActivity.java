@@ -1,12 +1,12 @@
 package com.example.memoapp_1;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -19,13 +19,19 @@ public class MainActivity extends AppCompatActivity {
     private final int SAVE_RESULT_REQUEST_CODE = 1;
     private MemoAdapter adapter;
 
+    private View.OnClickListener createNoteIntentListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivtyForNoteResult(null);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ListView listview = findViewById(R.id.note_listview);
-
         adapter = new MemoAdapter(this, R.layout.card_memo, new LinkedList<Note>()/*FakeNotes.getAllDummyNotesList()*/);
         listview.setAdapter(adapter);
 
@@ -44,23 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private View.OnClickListener createNoteIntentListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent createNote = new Intent(MainActivity.this, CreateNoteActivity.class);
-            startActivityForResult(createNote, SAVE_RESULT_REQUEST_CODE);
-        }
-    };
-
-
-    private View.OnClickListener fabSnackbarListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            addNoteToAdapter(FakeNotes.getDummyNote());
-
-        }
-    };
+    private void startActivtyForNoteResult(Note oldNote) {
+        Intent createNote = new Intent(MainActivity.this, CreateNoteActivity.class);
+        createNote.putExtra(CreateNoteActivity.NOTE_MODIFY_OLD_NOTE_KEY, oldNote);
+        startActivityForResult(createNote, SAVE_RESULT_REQUEST_CODE);
+    }
 
     private void addNoteToAdapter(Note note) {
         // Fetch the data set being used by the adapter.
@@ -83,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         snackbar.show();
+    }
+
+    public void startActivityForModify(Note oldNote) {
+        adapter.remove(oldNote);
+        startActivtyForNoteResult(oldNote);
     }
 
     @Override

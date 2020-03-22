@@ -22,22 +22,36 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateNoteActivity extends AppCompatActivity {
     public final static String NOTE_RESULT_INTENT_KEY = "ADGJ";
-    int noteColor;
+    public final static String NOTE_MODIFY_OLD_NOTE_KEY = "oldNote";
+
     LinearLayout parentLayout;
+    EditText titleText;
+    EditText bodyText;
+
+    private Note currentNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
-
         parentLayout = findViewById(R.id.activity_create_note_layout);
+        titleText = findViewById(R.id.activity_create_note_title_edit_text);
+        bodyText = findViewById(R.id.activity_create_note_body_edit_text);
+
+        Note oldNote = (Note) getIntent().getSerializableExtra(NOTE_MODIFY_OLD_NOTE_KEY);
+        if (oldNote != null) {
+            currentNote = oldNote;
+            titleText.setText(oldNote.getTitle());
+            bodyText.setText(oldNote.getBody());
+            parentLayout.setBackgroundColor(oldNote.getColor());
+        } else currentNote = new Note();
 
         RecyclerView recyclerView = findViewById(R.id.activity_create_note_color_picker_recycler);
         RecyclerView.Adapter adapter = new ColorPickerAdpater(getColorsList()/*Sending colors to Recycler Adapter*/, this);
         recyclerView.setAdapter(adapter);
     }
 
-    private List<Integer> getColorsList(){
+    private List<Integer> getColorsList() {
 
         // Creating list of color
         List<Integer> colorList = new ArrayList<Integer>() {
@@ -69,33 +83,19 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
             case R.id.action_save_note:
-                EditText tileText = findViewById(R.id.activity_create_note_title_edit_text);
-                EditText bodyText = findViewById(R.id.activity_create_note_body_edit_text);
-
-                String titleContent = tileText.getText().toString();
-                String bodyContent = bodyText.getText().toString();
-
-                if (TextUtils.isEmpty(titleContent) && TextUtils.isEmpty(bodyContent)) {
-                    Toast.makeText(this, "Note can't be a blank note !!", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-
-                Note saveNote = new Note(titleContent, bodyContent, noteColor);
-
-                Intent intent = new Intent().putExtra(NOTE_RESULT_INTENT_KEY, saveNote);
-                setResult(Activity.RESULT_OK, intent);
+                saveNote();
                 finish();
                 break;
             case R.id.action_color_picker:
-                noteColor = ContextCompat.getColor(CreateNoteActivity.this, R.color.colorPrimary);
-                AmbilWarnaDialog colorpicker = new AmbilWarnaDialog(this, noteColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                currentNote.setColor(ContextCompat.getColor(CreateNoteActivity.this, R.color.colorPrimary));
+                AmbilWarnaDialog colorpicker = new AmbilWarnaDialog(this, currentNote.getColor(), new AmbilWarnaDialog.OnAmbilWarnaListener() {
                     @Override
                     public void onCancel(AmbilWarnaDialog dialog) {
-
                     }
 
                     @Override
@@ -108,14 +108,35 @@ public class CreateNoteActivity extends AppCompatActivity {
             default:
                 return false;
         }
-
         return true;
+    }
 
+    private void saveNote() {
+        String titleContent = titleText.getText().toString();
+        String bodyContent = bodyText.getText().toString();
+
+        if (TextUtils.isEmpty(titleContent) && TextUtils.isEmpty(bodyContent)) {
+            Toast.makeText(this, "Note can't be a blank note !!", Toast.LENGTH_SHORT).show();
+        }
+
+        currentNote.setTitle(titleContent);
+        currentNote.setBody(bodyContent);
+        currentNote.updateCreationTime();
+
+        Note saveNote = currentNote;
+
+        Intent intent = new Intent().putExtra(NOTE_RESULT_INTENT_KEY, saveNote);
+        setResult(Activity.RESULT_OK, intent);
     }
 
     public void setNoteColor(int color) {
-        noteColor = color;
-        parentLayout.setBackgroundColor(noteColor);
+        currentNote.setColor(color);
+        parentLayout.setBackgroundColor(currentNote.getColor());
     }
 
+    @Override
+    public void onBackPressed() {
+        saveNote();
+        super.onBackPressed();
+    }
 }

@@ -10,14 +10,15 @@ public class Note implements Serializable {
     private Date creationTime;
     private Integer color;
 
-    private Note() {
+    public Note() {
+        updateCreationTime();
     }
 
     public Note(String title, String body, Integer color) {
         this.title = title;
         this.body = body;
         this.color = color;
-        this.creationTime=new Date();
+        updateCreationTime();
     }
 
     public String getTitle() {
@@ -46,5 +47,9 @@ public class Note implements Serializable {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public void updateCreationTime() {
+        this.creationTime = new Date();
     }
 }

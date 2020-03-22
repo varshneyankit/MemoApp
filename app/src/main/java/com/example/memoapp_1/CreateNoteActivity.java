@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateNoteActivity extends AppCompatActivity {
@@ -29,6 +32,18 @@ public class CreateNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+
+        // Creating list of colors
+
+        List<String> colorList =new ArrayList<>();
+        colorList.add(0,"#b3ffff");
+        colorList.add(1,"#4dffb8");
+        colorList.add(2,"#ff99bb");
+        colorList.add(3,"#ffff99");
+        colorList.add(4,"#ff99ff");
+        colorList.add(5,"#ff4d4d");
+        colorList.add(6,"#6666ff");
+        colorList.add(7,"#ff8533");
 
     }
 

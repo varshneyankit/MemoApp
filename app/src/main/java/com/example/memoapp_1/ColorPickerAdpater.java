@@ -14,21 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColorPickerAdpater extends RecyclerView.Adapter<ColorPickerAdpater.ViewHolder> {
-    private List<String> colors = new ArrayList<String>() {
-
-        @Override
-        public void add(int index, String element) {
-            super.add(index, element);
-            colors.add(0,"#b3ffff");
-            colors.add(1,"#4dffb8");
-            colors.add(2,"#ff99bb");
-            colors.add(3,"#ffff99");
-            colors.add(4,"#ff99ff");
-            colors.add(5,"#ff4d4d");
-            colors.add(6,"#6666ff");
-            colors.add(7,"#ff8533");
-        }
-    };
+    private List<String> colors;
 
     public ColorPickerAdpater(List<String> colors) {
         this.colors = colors;

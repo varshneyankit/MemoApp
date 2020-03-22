@@ -16,8 +16,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int SAVE_RESULT_REQUEST_CODE=1;
+    private final int SAVE_RESULT_REQUEST_CODE = 1;
     private MemoAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener createNoteIntentListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent createNote = new Intent(MainActivity.this,CreateNoteActivity.class);
-            startActivityForResult(createNote,SAVE_RESULT_REQUEST_CODE);
+            Intent createNote = new Intent(MainActivity.this, CreateNoteActivity.class);
+            startActivityForResult(createNote, SAVE_RESULT_REQUEST_CODE);
         }
     };
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                allNotes.remove(allNotes.size()-1);
+                allNotes.remove(allNotes.size() - 1);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -86,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode==SAVE_RESULT_REQUEST_CODE) {
+        if (requestCode == SAVE_RESULT_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-               Note n =(Note)(data.getSerializableExtra(CreateNoteActivity.NOTE_RESULT_INTENT_KEY));
-               addNoteToAdapter(n);
+                Note n = (Note) (data.getSerializableExtra(CreateNoteActivity.NOTE_RESULT_INTENT_KEY));
+                addNoteToAdapter(n);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

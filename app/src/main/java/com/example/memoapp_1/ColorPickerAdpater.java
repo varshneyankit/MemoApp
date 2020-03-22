@@ -1,5 +1,6 @@
 package com.example.memoapp_1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,11 @@ import java.util.List;
 
 public class ColorPickerAdpater extends RecyclerView.Adapter<ColorPickerAdpater.ViewHolder> {
     private List<Integer> colors;
+    private Context parent;
 
-    public ColorPickerAdpater(List<Integer> colors) {
+    public ColorPickerAdpater(List<Integer> colors, Context parent) {
         this.colors = colors;
+        this.parent = parent;
     }
 
     @NonNull
@@ -26,10 +29,17 @@ public class ColorPickerAdpater extends RecyclerView.Adapter<ColorPickerAdpater.
         return new ViewHolder(v);
     }
 
+    // Setting data in the picker
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Integer sColor = colors.get(position);
+        final Integer sColor = colors.get(position);
         holder.pickerView.setCircleColor(sColor);
+        holder.pickerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CreateNoteActivity)parent).setNoteColor(sColor);
+            }
+        });
     }
 
     @Override
@@ -44,7 +54,7 @@ public class ColorPickerAdpater extends RecyclerView.Adapter<ColorPickerAdpater.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            pickerView = (CircleView) itemView.findViewById(R.id.color_item_circle);
+            pickerView = itemView.findViewById(R.id.color_item_circle);
         }
     }
 

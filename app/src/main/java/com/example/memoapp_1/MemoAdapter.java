@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class MemoAdapter extends ArrayAdapter<Note> {
         TextView titleview = convertView.findViewById(R.id.item_title);
         TextView bodyview = convertView.findViewById(R.id.item_body);
         TextView timeview = convertView.findViewById(R.id.item_creation_time);
+        CardView cardView = convertView.findViewById(R.id.item_card);
 
         // Fetch the required item according to position from list of notes (data).
         Note currentNote = notes.get(position);
@@ -63,7 +65,8 @@ public class MemoAdapter extends ArrayAdapter<Note> {
         titleview.setText(currentNote.getTitle());
         bodyview.setText(currentNote.getBody());
         timeview.setText("Created : " + currentNote.getCreationTime().toLocaleString());
-        convertView.setBackgroundColor(currentNote.getColor());
+        cardView.setBackgroundColor(currentNote.getColor());
+
         return convertView;
     }
 

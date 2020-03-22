@@ -1,14 +1,6 @@
 package com.example.memoapp_1;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,7 +10,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +22,25 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateNoteActivity extends AppCompatActivity {
     public final static String NOTE_RESULT_INTENT_KEY = "ADGJ";
-    int DEFAULT_COLOR;
-    LinearLayout CURRENT_LAYOUT;
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    int noteColor;
+    LinearLayout parentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
+        parentLayout = findViewById(R.id.activity_create_note_layout);
+
+        RecyclerView recyclerView = findViewById(R.id.activity_create_note_color_picker_recycler);
+        RecyclerView.Adapter adapter = new ColorPickerAdpater(getColorsList()/*Sending colors to Recycler Adapter*/, this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private List<Integer> getColorsList(){
+
         // Creating list of color
-        List<Integer> colorList =new ArrayList<Integer>(){
+        List<Integer> colorList = new ArrayList<Integer>() {
             // Overriding add() to get the value of color
             @Override
             public boolean add(Integer element) {
@@ -56,11 +58,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         colorList.add(R.color.colorRed);
         colorList.add(R.color.colorAccent);
 
-        // Sending colors to Recycler Adapter
-
-        recyclerView = (RecyclerView) findViewById(R.id.activity_create_note_color_picker_recycler);
-        adapter = new ColorPickerAdpater(colorList);
-        recyclerView.setAdapter(adapter);
+        return colorList;
     }
 
     @Override
@@ -82,20 +80,19 @@ public class CreateNoteActivity extends AppCompatActivity {
                 String bodyContent = bodyText.getText().toString();
 
                 if (TextUtils.isEmpty(titleContent) && TextUtils.isEmpty(bodyContent)) {
-                    Toast.makeText(this,"Note can't be a blank note !!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Note can't be a blank note !!", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
-                Note saveNote = new Note(titleContent, bodyContent,DEFAULT_COLOR);
+                Note saveNote = new Note(titleContent, bodyContent, noteColor);
 
                 Intent intent = new Intent().putExtra(NOTE_RESULT_INTENT_KEY, saveNote);
                 setResult(Activity.RESULT_OK, intent);
                 finish();
-
+                break;
             case R.id.action_color_picker:
-                CURRENT_LAYOUT = (LinearLayout) findViewById(R.id.activity_create_note_layout);
-                DEFAULT_COLOR = ContextCompat.getColor(CreateNoteActivity.this,R.color.colorPrimary);
-                AmbilWarnaDialog colorpicker = new AmbilWarnaDialog(this, DEFAULT_COLOR, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                noteColor = ContextCompat.getColor(CreateNoteActivity.this, R.color.colorPrimary);
+                AmbilWarnaDialog colorpicker = new AmbilWarnaDialog(this, noteColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
                     @Override
                     public void onCancel(AmbilWarnaDialog dialog) {
 
@@ -103,11 +100,11 @@ public class CreateNoteActivity extends AppCompatActivity {
 
                     @Override
                     public void onOk(AmbilWarnaDialog dialog, int color) {
-                        DEFAULT_COLOR = color;
-                        CURRENT_LAYOUT.setBackgroundColor(DEFAULT_COLOR);
+                        setNoteColor(color);
                     }
                 });
-                        colorpicker.show();
+                colorpicker.show();
+                break;
             default:
                 return false;
         }
@@ -115,16 +112,10 @@ public class CreateNoteActivity extends AppCompatActivity {
         return true;
 
     }
-//
-//    @SuppressLint("ResourceAsColor")
-//    public void colorPicker(){
-//        FloatingActionButton bluec = findViewById(R.id.activity_create_note_body_color_blue);
-//        FloatingActionButton yellowc = findViewById(R.id.activity_create_note_body_color_yellow);
-//        LinearLayout ll =findViewById(R.id.activity_create_note_layout);
-//        if(bluec.isSelected()) ll.setBackgroundColor(R.color.colorBlue);
-//        if (yellowc.isSelected()) ll.setBackgroundColor(R.color.colorYellow);
 
-
-//    }
+    public void setNoteColor(int color) {
+        noteColor = color;
+        parentLayout.setBackgroundColor(noteColor);
+    }
 
 }

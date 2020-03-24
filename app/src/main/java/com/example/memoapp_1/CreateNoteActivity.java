@@ -105,6 +105,9 @@ public class CreateNoteActivity extends AppCompatActivity {
                 });
                 colorpicker.show();
                 break;
+            case R.id.action_delete_note:
+                finish();
+                break;
             default:
                 return false;
         }
